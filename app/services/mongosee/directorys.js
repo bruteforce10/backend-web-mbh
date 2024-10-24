@@ -2,8 +2,16 @@ const Directorys = require("../../api/v1/directorys/model");
 const { checkingImage } = require("./images");
 
 const createDirectorys = async (req) => {
-  const { title, description, phone, instagram, location, images, categories } =
-    req.body;
+  const {
+    title,
+    description,
+    phone,
+    instagram,
+    location,
+    slug,
+    images = [],
+    categories,
+  } = req.body;
 
   const checkImage = images.map((image) => {
     return checkingImage(image);
@@ -18,6 +26,7 @@ const createDirectorys = async (req) => {
     description,
     categories,
     phone,
+    slug,
     instagram,
     location,
     images,

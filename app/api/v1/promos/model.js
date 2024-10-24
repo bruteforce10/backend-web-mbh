@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 
-let directorySchema = new Schema(
+let promoSchema = new Schema(
   {
     title: {
       type: String,
@@ -11,29 +11,31 @@ let directorySchema = new Schema(
       type: String,
       required: true,
     },
-    phone: {
-      type: String,
-    },
-    instagram: {
-      type: String,
+    directory: {
+      type: mongoose.Types.ObjectId,
+      ref: "Directory",
+      required: true,
     },
     location: {
       type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      enum: ["dinning", "shopping"],
+    },
+    image: {
+      type: mongoose.Types.ObjectId,
+      ref: "Image",
+      required: true,
     },
     slug: {
       type: String,
       required: true,
     },
-    categories: {
-      type: mongoose.Types.ObjectId,
-      ref: "Category",
+    endPromo: {
+      type: Date,
       required: true,
-    },
-    images: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Image",
-      required: true,
-      default: [],
     },
   },
   {
@@ -41,4 +43,4 @@ let directorySchema = new Schema(
   }
 );
 
-module.exports = model("Directory", directorySchema);
+module.exports = model("Promo", promoSchema);

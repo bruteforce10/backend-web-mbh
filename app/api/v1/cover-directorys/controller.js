@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const {
   getOneCoverDirectorys,
   createDirectorys,
+  updateDirectorys,
 } = require("../../../services/mongosee/coverDirectorys");
 
 const create = async (req, res, next) => {
@@ -22,7 +23,17 @@ const find = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const result = await updateDirectorys(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   create,
   find,
+  update,
 };

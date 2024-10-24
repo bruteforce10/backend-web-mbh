@@ -1,5 +1,6 @@
 const CoverDirectorys = require("../../api/v1/cover-directorys/model");
-const { NotFoundError } = require("../../errors");
+const { NotFoundError, BadRequestError } = require("../../errors");
+const { checkingImage } = require("./images");
 
 const getOneCoverDirectorys = async (req) => {
   const { id } = req.params;
@@ -13,6 +14,23 @@ const getOneCoverDirectorys = async (req) => {
 
   if (!result) throw new NotFoundError(`Tidak ada Kategori dengan id :  ${id}`);
 
+  return result;
+};
+
+const updateDirectorys = async (req) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  checkingImage(id);
+
+  const result = await CoverDirectorys.updateOne(
+    { title },
+    {
+      $pull: { images: id },
+    }
+  );
+
+  if (!result) throw new BadRequestError("id tidak ditemukan");
   return result;
 };
 
@@ -47,4 +65,5 @@ const createDirectorys = async (req) => {
 module.exports = {
   getOneCoverDirectorys,
   createDirectorys,
+  updateDirectorys,
 };
