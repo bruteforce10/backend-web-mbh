@@ -1,5 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
-const { createDirectorys } = require("../../../services/mongosee/directorys");
+const {
+  createDirectorys,
+  getDirectorys,
+} = require("../../../services/mongosee/directorys");
 
 const create = async (req, res, next) => {
   try {
@@ -10,6 +13,16 @@ const create = async (req, res, next) => {
   }
 };
 
+const index = async (req, res, next) => {
+  try {
+    const result = await getDirectorys(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   create,
+  index,
 };

@@ -33,6 +33,10 @@ let promoSchema = new Schema(
       type: String,
       required: true,
     },
+    startPromo: {
+      type: Date,
+      required: true,
+    },
     endPromo: {
       type: Date,
       required: true,

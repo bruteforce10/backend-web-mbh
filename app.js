@@ -17,6 +17,7 @@ const imagesRouter = require("./app/api/v1/images/router");
 const categoriesRouter = require("./app/api/v1/categories/router");
 const directorysRouter = require("./app/api/v1/directorys/router");
 const coverDirectorysRouter = require("./app/api/v1/cover-directorys/router");
+const promosRouter = require("./app/api/v1/promos/router");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -35,6 +36,7 @@ app.use(`${v1}/cms`, imagesRouter);
 app.use(`${v1}/cms`, categoriesRouter);
 app.use(`${v1}/cms`, directorysRouter);
 app.use(`${v1}/cms`, coverDirectorysRouter);
+app.use(`${v1}/cms`, promosRouter);
 
 // catch 404 and forward to error handler
 app.use(notFoundMiddleware);

@@ -9,9 +9,25 @@ const createPromo = async (req) => {
     category,
     image,
     slug,
+    startPromo,
     endPromo,
   } = req.body;
 
-  const promo = await Promos.create();
+  const promo = await Promos.create({
+    title,
+    description,
+    directory,
+    location,
+    category,
+    image,
+    slug,
+    startPromo,
+    endPromo,
+  });
+
   return promo;
+};
+
+module.exports = {
+  createPromo,
 };

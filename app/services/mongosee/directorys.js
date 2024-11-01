@@ -35,4 +35,12 @@ const createDirectorys = async (req) => {
   return result;
 };
 
-module.exports = { createDirectorys };
+const getDirectorys = async (req) => {
+  const result = await Directorys.find().populate({
+    path: "images",
+    select: "name",
+  });
+  return result;
+};
+
+module.exports = { createDirectorys, getDirectorys };
