@@ -4,6 +4,7 @@ const { model, Schema } = mongoose;
 let imageSchema = Schema(
   {
     name: { type: String },
+    type: { type: String },
   },
   { timestamps: true }
 );

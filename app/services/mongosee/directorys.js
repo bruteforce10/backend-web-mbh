@@ -1,4 +1,5 @@
 const Directorys = require("../../api/v1/directorys/model");
+const Categories = require("../../api/v1/categories/model");
 const { checkingImage } = require("./images");
 
 const createDirectorys = async (req) => {
@@ -36,7 +37,15 @@ const createDirectorys = async (req) => {
 };
 
 const getDirectorys = async (req) => {
-  const result = await Directorys.find().populate({
+  const { title, floor, category } = req.query;
+
+  const query = {};
+  if (category) {
+    const check = await Categories.findOne({ name: category });
+    if (check) query.categories = check._id;
+  }
+
+  const result = await Directorys.find(query).populate({
     path: "images",
     select: "name",
   });

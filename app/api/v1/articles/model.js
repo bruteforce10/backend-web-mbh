@@ -20,6 +20,18 @@ let articleSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

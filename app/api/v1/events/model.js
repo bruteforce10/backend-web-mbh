@@ -7,6 +7,10 @@ let eventSchema = new Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -14,6 +18,21 @@ let eventSchema = new Schema(
     image: {
       type: mongoose.Types.ObjectId,
       ref: "Image",
+      required: true,
+    },
+    linkInstagram: {
+      type: String,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    startEvent: {
+      type: Date,
+      required: true,
+    },
+    endEvent: {
+      type: Date,
       required: true,
     },
   },

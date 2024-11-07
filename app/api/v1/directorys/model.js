@@ -7,6 +7,11 @@ let directorySchema = new Schema(
       type: String,
       required: true,
     },
+    floor: {
+      type: String,
+      required: true,
+      enum: ["1", "2", "3", "4"],
+    },
     description: {
       type: String,
       required: true,

@@ -1,6 +1,5 @@
 const Events = require("../../api/v1/events/model");
-const { BadRequestError, NotFoundError } = require("../../errors");
-const { checkingImage } = require("./images");
+const { BadRequestError } = require("../../errors");
 
 const getAllEvents = async (req) => {
   const result = await Events.find().populate({
@@ -12,9 +11,16 @@ const getAllEvents = async (req) => {
 };
 
 const createEvents = async (req) => {
-  const { title, description, image } = req.body;
-
-  await checkingImage(image);
+  const {
+    title,
+    description,
+    image,
+    slug,
+    location,
+    startEvent,
+    endEvent,
+    linkInstagram,
+  } = req.body;
 
   const check = await Events.findOne({
     title,
@@ -25,6 +31,11 @@ const createEvents = async (req) => {
     title,
     description,
     image,
+    slug,
+    location,
+    startEvent,
+    endEvent,
+    linkInstagram,
   });
 
   return result;

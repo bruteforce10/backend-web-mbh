@@ -1,3 +1,4 @@
+const { type } = require("os");
 const Images = require("../../api/v1/images/model");
 const { NotFoundError } = require("../../errors");
 const fs = require("fs");
@@ -14,6 +15,7 @@ const createImages = async (req) => {
     name: req.file
       ? `uploads/${req.file.filename}`
       : "uploads/avatar/default.jpg",
+    type: req.body.type,
   });
 
   return result;
