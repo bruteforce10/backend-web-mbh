@@ -60,16 +60,23 @@ const getDirectorys = async (req) => {
     query.title = { $regex: title, $options: "i" };
   }
 
-  console.log(query, "query");
-
   const result = await Directorys.find(query).populate({
     path: "images",
     select: "name",
   });
 
-  console.log(result);
+  return result;
+};
+
+const getOneDirectory = async (req) => {
+  const { slug } = req.params;
+
+  const result = await Directorys.findOne({ slug }).populate({
+    path: "images",
+    select: "name",
+  });
 
   return result;
 };
 
-module.exports = { createDirectorys, getDirectorys };
+module.exports = { createDirectorys, getDirectorys, getOneDirectory };

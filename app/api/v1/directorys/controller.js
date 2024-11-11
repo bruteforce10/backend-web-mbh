@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const {
   createDirectorys,
   getDirectorys,
+  getOneDirectory,
 } = require("../../../services/mongosee/directorys");
 
 const create = async (req, res, next) => {
@@ -22,7 +23,17 @@ const index = async (req, res, next) => {
   }
 };
 
+const indexOne = async (req, res, next) => {
+  try {
+    const result = await getOneDirectory(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   create,
   index,
+  indexOne,
 };
