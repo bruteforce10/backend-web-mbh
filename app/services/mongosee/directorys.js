@@ -41,7 +41,7 @@ const createDirectorys = async (req) => {
 const getDirectorys = async (req) => {
   const { title, floor, category } = req.query;
 
-  console.log(req.query);
+  console.log(title);
 
   const query = {};
 
@@ -52,18 +52,35 @@ const getDirectorys = async (req) => {
     }
   }
 
-  if (floor !== "undefined" && floor !== "" && floor !== "null") {
+  if (
+    floor !== "undefined" &&
+    floor !== "" &&
+    floor !== "null" &&
+    floor !== null &&
+    floor !== undefined
+  ) {
     query.floor = floor;
   }
 
-  if (title !== "undefined" && title !== "" && title !== "null") {
+  if (
+    title !== "undefined" &&
+    title !== "" &&
+    title !== "null" &&
+    title !== null &&
+    title !== undefined
+  ) {
     query.title = { $regex: title, $options: "i" };
   }
 
-  const result = await Directorys.find(query).populate({
-    path: "images",
-    select: "name",
-  });
+  const result = await Directorys.find(query)
+    .populate({
+      path: "images",
+      select: "name",
+    })
+    .populate({
+      path: "categories",
+      select: "name",
+    });
 
   return result;
 };

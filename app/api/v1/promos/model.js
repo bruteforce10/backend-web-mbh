@@ -41,6 +41,9 @@ let promoSchema = new Schema(
       type: Date,
       required: true,
     },
+    linkPromo: {
+      type: String,
+    },
   },
   {
     timestamps: true,

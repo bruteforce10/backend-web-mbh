@@ -10,6 +10,19 @@ const getAllEvents = async (req) => {
   return result;
 };
 
+const getOneEvents = async (req) => {
+  const { slug } = req.params;
+
+  const result = await Events.findOne({
+    slug,
+  }).populate({
+    path: "image",
+    select: "name",
+  });
+
+  return result;
+};
+
 const createEvents = async (req) => {
   const {
     title,
@@ -44,4 +57,5 @@ const createEvents = async (req) => {
 module.exports = {
   getAllEvents,
   createEvents,
+  getOneEvents,
 };
