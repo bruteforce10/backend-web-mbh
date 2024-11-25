@@ -4,6 +4,7 @@ const {
   getPromo,
   getOnePromo,
   getDirectoryPromo,
+  deletePromo,
 } = require("../../../services/mongosee/promo");
 
 const create = async (req, res, next) => {
@@ -43,9 +44,19 @@ const indexDirectoryPromo = async (req, res) => {
   }
 };
 
+const destroy = async (req, res, next) => {
+  try {
+    const result = await deletePromo(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   index,
   indexOne,
+  destroy,
   indexDirectoryPromo,
 };

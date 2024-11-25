@@ -1,6 +1,7 @@
 const Directorys = require("../../api/v1/directorys/model");
 const Categories = require("../../api/v1/categories/model");
 const { checkingImage } = require("./images");
+const { NotFoundError } = require("../../errors");
 
 const createDirectorys = async (req) => {
   const {
@@ -10,16 +11,11 @@ const createDirectorys = async (req) => {
     instagram,
     location,
     slug,
-    images = [],
+    images,
     floor,
     categories,
   } = req.body;
 
-  const checkImage = images.map((image) => {
-    return checkingImage(image);
-  });
-
-  await Promise.all(checkImage);
   const checkName = await Directorys.findOne({ title });
   if (checkName) throw new BadRequestError("Directory nama duplikat");
 
@@ -40,8 +36,6 @@ const createDirectorys = async (req) => {
 
 const getDirectorys = async (req) => {
   const { title, floor, category } = req.query;
-
-  console.log(title);
 
   const query = {};
 
@@ -75,7 +69,11 @@ const getDirectorys = async (req) => {
   const result = await Directorys.find(query)
     .populate({
       path: "images",
-      select: "name",
+      select: "title images",
+      populate: {
+        path: "images",
+        model: "Image",
+      },
     })
     .populate({
       path: "categories",
@@ -85,15 +83,73 @@ const getDirectorys = async (req) => {
   return result;
 };
 
-const getOneDirectory = async (req) => {
-  const { slug } = req.params;
+const updateDirectorys = async (req) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    phone,
+    instagram,
+    location,
+    slug,
+    images,
+    floor,
+    categories,
+  } = req.body;
 
-  const result = await Directorys.findOne({ slug }).populate({
-    path: "images",
-    select: "name",
-  });
+  const result = await Directorys.findOneAndUpdate(
+    { _id: id },
+    {
+      title,
+      description,
+      categories,
+      phone,
+      slug,
+      instagram,
+      location,
+      images,
+      floor,
+    },
+    { new: true, runValidators: true }
+  );
 
   return result;
 };
 
-module.exports = { createDirectorys, getDirectorys, getOneDirectory };
+const getOneDirectory = async (req) => {
+  const { slug } = req.params;
+
+  const result = await Directorys.findOne({ slug })
+    .populate({
+      path: "images",
+      select: "title images",
+      populate: {
+        path: "images",
+        model: "Image",
+      },
+    })
+    .populate({
+      path: "categories",
+      select: "name",
+    });
+
+  return result;
+};
+
+const deleteDirectory = async (req) => {
+  const { id } = req.params;
+
+  const result = await Directorys.findOne({ _id: id });
+
+  if (!result) throw new NotFoundError(`Tidak ada Kategori dengan id :  ${id}`);
+
+  await result.deleteOne();
+};
+
+module.exports = {
+  createDirectorys,
+  getDirectorys,
+  getOneDirectory,
+  deleteDirectory,
+  updateDirectorys,
+};

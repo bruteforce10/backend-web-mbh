@@ -35,10 +35,9 @@ let directorySchema = new Schema(
       required: true,
     },
     images: {
-      type: [mongoose.Types.ObjectId],
-      ref: "Image",
+      type: mongoose.Types.ObjectId,
+      ref: "CoverDirectory",
       required: true,
-      default: [],
     },
   },
   {

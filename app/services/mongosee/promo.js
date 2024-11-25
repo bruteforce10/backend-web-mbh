@@ -8,6 +8,7 @@ const createPromo = async (req) => {
     location,
     category,
     image,
+    linkInstagram,
     slug,
     startPromo,
     endPromo,
@@ -20,7 +21,7 @@ const createPromo = async (req) => {
     location,
     category,
     image,
-    linkPromo,
+    linkInstagram,
     slug,
     startPromo,
     endPromo,
@@ -69,9 +70,17 @@ const getDirectoryPromo = async (req) => {
   return result;
 };
 
+const deletePromo = async (req) => {
+  const { id } = req.params;
+  const result = await Promos.findOne({ _id: id });
+  if (!result) throw new NotFoundError(`Tidak ada Promo dengan id :  ${id}`);
+  await result.deleteOne();
+};
+
 module.exports = {
   createPromo,
   getPromo,
   getOnePromo,
+  deletePromo,
   getDirectoryPromo,
 };
