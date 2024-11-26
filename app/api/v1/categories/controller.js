@@ -3,6 +3,7 @@ const {
   createCategories,
   getAllCategories,
   getOneCategories,
+  deleteCategories,
 } = require("../../../services/mongosee/categories");
 
 const create = async (req, res, next) => {

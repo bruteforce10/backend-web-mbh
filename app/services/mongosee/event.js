@@ -1,5 +1,5 @@
 const Events = require("../../api/v1/events/model");
-const { BadRequestError } = require("../../errors");
+const { BadRequestError, NotFoundError } = require("../../errors");
 
 const getAllEvents = async (req) => {
   const result = await Events.find().populate({
@@ -54,6 +54,38 @@ const createEvents = async (req) => {
   return result;
 };
 
+const updateEvents = async (req) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    image,
+    slug,
+    location,
+    startEvent,
+    endEvent,
+    linkInstagram,
+  } = req.body;
+  const result = await Events.findOneAndUpdate(
+    { _id: id },
+    {
+      title,
+      description,
+      image,
+      slug,
+      location,
+      startEvent,
+      endEvent,
+      linkInstagram,
+    },
+    { new: true, runValidators: true }
+  );
+
+  if (!result) throw new NotFoundError(`Tidak ada Event dengan id :  ${id}`);
+
+  return result;
+};
+
 const deleteEvent = async (req) => {
   const { id } = req.params;
   const result = await Events.findOne({ _id: id });
@@ -66,4 +98,5 @@ module.exports = {
   createEvents,
   getOneEvents,
   deleteEvent,
+  updateEvents,
 };

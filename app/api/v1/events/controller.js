@@ -3,6 +3,8 @@ const {
   createEvents,
   getAllEvents,
   getOneEvents,
+  deleteEvent,
+  updateEvents,
 } = require("../../../services/mongosee/event");
 
 const create = async (req, res, next) => {
@@ -32,8 +34,28 @@ const indexOne = async (req, res, next) => {
   }
 };
 
+const destroy = async (req, res, next) => {
+  try {
+    await deleteEvent(req);
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const update = async (req, res, next) => {
+  try {
+    const result = await updateEvents(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   index,
   indexOne,
+  destroy,
+  update,
 };

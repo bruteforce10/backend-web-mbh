@@ -41,7 +41,7 @@ let promoSchema = new Schema(
       type: Date,
       required: true,
     },
-    linkPromo: {
+    linkInstagram: {
       type: String,
     },
   },

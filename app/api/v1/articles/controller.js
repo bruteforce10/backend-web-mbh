@@ -1,5 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
-const { createArticles } = require("../../../services/mongosee/articles");
+const {
+  createArticles,
+  getAllArticles,
+  deleteArticles,
+  updateArticles,
+} = require("../../../services/mongosee/articles");
 
 const create = async (req, res, next) => {
   try {
@@ -10,6 +15,36 @@ const create = async (req, res, next) => {
   }
 };
 
+const index = async (req, res, next) => {
+  try {
+    const result = await getAllArticles(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const destroy = async (req, res, next) => {
+  try {
+    await deleteArticles(req);
+    res.status(StatusCodes.NO_CONTENT).json({ msg: "deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const update = async (req, res, next) => {
+  try {
+    const result = await updateArticles(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
+  index,
+  destroy,
+  update,
 };
