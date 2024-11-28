@@ -1,5 +1,5 @@
 const express = require("express");
-const { create, destroy } = require("./controller");
+const { create, destroy, indexJumbotron } = require("./controller");
 const upload = require("../../../middlewares/multer");
 
 const router = express.Router();

@@ -19,6 +19,7 @@ const directorysRouter = require("./app/api/v1/directorys/router");
 const coverDirectorysRouter = require("./app/api/v1/cover-directorys/router");
 const promosRouter = require("./app/api/v1/promos/router");
 const articleRouter = require("./app/api/v1/articles/router");
+const jumbotronRouter = require("./app/api/v1/jumbotron/router");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -39,6 +40,7 @@ app.use(`${v1}/cms`, directorysRouter);
 app.use(`${v1}/cms`, coverDirectorysRouter);
 app.use(`${v1}/cms`, promosRouter);
 app.use(`${v1}/cms`, articleRouter);
+app.use(`${v1}/cms`, jumbotronRouter);
 
 // catch 404 and forward to error handler
 app.use(notFoundMiddleware);

@@ -61,4 +61,9 @@ const deleteImages = async (req) => {
   return result;
 };
 
-module.exports = { createImages, generateImage, checkingImage, deleteImages };
+module.exports = {
+  createImages,
+  generateImage,
+  checkingImage,
+  deleteImages,
+};
