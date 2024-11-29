@@ -7,10 +7,36 @@ const createArticles = async (req) => {
   return result;
 };
 
-const getAllArticles = async (req) => {
-  const result = await Articles.find().populate("image");
+// const getAllArticles = async (req) => {
+//   const result = await Articles.find().populate("image");
 
-  return result;
+//   return result;
+// };
+
+const getAllArticles = async (req, res) => {
+  try {
+    const { page = 1, limit = 150 } = req.query;
+    const skip = (page - 1) * limit;
+
+    const articles = await Articles.find()
+      .populate("image")
+      .skip(parseInt(skip))
+      .limit(parseInt(limit));
+
+    const totalArticles = await Articles.countDocuments();
+    const totalPages = Math.ceil(totalArticles / limit);
+
+    return {
+      data: articles,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages,
+        totalArticles,
+      },
+    };
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 const deleteArticles = async (req) => {

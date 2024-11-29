@@ -14,7 +14,6 @@ let promoSchema = new Schema(
     directory: {
       type: mongoose.Types.ObjectId,
       ref: "Directory",
-      required: true,
     },
     location: {
       type: String,
