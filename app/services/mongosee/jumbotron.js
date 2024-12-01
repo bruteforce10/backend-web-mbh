@@ -11,7 +11,6 @@ const createJumbotron = async (req) => {
 };
 
 const updateJumbotron = async (req) => {
-  console.log(req.body);
   const result = await Jumbotron.updateOne({}, req.body, {
     new: true,
     upsert: true,

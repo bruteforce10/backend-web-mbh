@@ -21,7 +21,8 @@ const getAllArticles = async (req, res) => {
     const articles = await Articles.find()
       .populate("image")
       .skip(parseInt(skip))
-      .limit(parseInt(limit));
+      .limit(parseInt(limit))
+      .sort({ createdAt: -1, title: 1 });
 
     const totalArticles = await Articles.countDocuments();
     const totalPages = Math.ceil(totalArticles / limit);
@@ -75,9 +76,18 @@ const updateArticles = async (req) => {
   return result;
 };
 
+const getOneArticles = async (req) => {
+  const { slug } = req.params;
+  const result = await Articles.findOne({ slug }).populate("image");
+  if (!result)
+    throw new NotFoundError(`Tidak ada Artikel dengan slug :  ${slug}`);
+  return result;
+};
+
 module.exports = {
   createArticles,
   getAllArticles,
   deleteArticles,
   updateArticles,
+  getOneArticles,
 };
