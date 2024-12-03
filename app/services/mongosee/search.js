@@ -20,19 +20,21 @@ const searchDirectorys = async (query) => {
 const searchEvents = async (query) => {
   return await Events.find({
     title: { $regex: query, $options: "i" },
-  });
+  }).populate("image");
 };
 
 const searchArticles = async (query) => {
   return await Articles.find({
     title: { $regex: query, $options: "i" },
-  }).populate("images");
+  }).populate("image");
 };
 
 const searchPromos = async (query) => {
   return await Promos.find({
     title: { $regex: query, $options: "i" },
-  }).populate("images");
+  })
+    .populate("image")
+    .populate("directory");
 };
 
 const getAllSearch = async (req) => {
