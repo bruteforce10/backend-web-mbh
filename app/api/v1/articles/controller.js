@@ -5,6 +5,7 @@ const {
   deleteArticles,
   updateArticles,
   getOneArticles,
+  searchArticles,
 } = require("../../../services/mongosee/articles");
 
 const create = async (req, res, next) => {
@@ -43,6 +44,15 @@ const destroy = async (req, res, next) => {
   }
 };
 
+const search = async (req, res, next) => {
+  try {
+    const result = await searchArticles(req);
+    res.status(StatusCodes.OK).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const update = async (req, res, next) => {
   try {
     const result = await updateArticles(req);
@@ -58,4 +68,5 @@ module.exports = {
   destroy,
   update,
   indexOne,
+  search,
 };

@@ -84,10 +84,19 @@ const getOneArticles = async (req) => {
   return result;
 };
 
+const searchArticles = async (req) => {
+  const { q } = req.query;
+
+  return await Articles.find({
+    title: { $regex: q, $options: "i" },
+  }).populate("image");
+};
+
 module.exports = {
   createArticles,
   getAllArticles,
   deleteArticles,
   updateArticles,
   getOneArticles,
+  searchArticles,
 };
